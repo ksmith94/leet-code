@@ -3,6 +3,7 @@
  */
 
 var MyQueue = function() {
+  // Two stacks - one to pop, one to push
   this.pushStack = [];
   this.popStack = [];
 };
@@ -12,6 +13,7 @@ var MyQueue = function() {
  * @return {void}
  */
 MyQueue.prototype.push = function(x) {
+  // Simply push x onto the push stack
   this.pushStack.push(x);
 };
 
@@ -19,12 +21,15 @@ MyQueue.prototype.push = function(x) {
  * @return {number}
  */
 MyQueue.prototype.pop = function() {
+  // The first item on our queue is either the last item of our popStack or the first item of our pushStack if there is nothing on the popStack.
+  // If there is nothing on the popStack, we need to add each item from the pushStack to it in order. We can pop off the last item of pushStack and push it to popStack until pushStack is empty
   if (this.popStack.length === 0) {
     while (this.pushStack.length) {
       this.popStack.push(this.pushStack.pop());
     }
   }
 
+  // Pop the last item off popStack and return it
   return this.popStack.pop();
 };
 
@@ -33,8 +38,10 @@ MyQueue.prototype.pop = function() {
  */
 MyQueue.prototype.peek = function() {
   if (this.popStack.length) {
+    // If there is something on the popStack, return the last item
     return this.popStack[this.popStack.length - 1];
   } else {
+    // If popStack is empty, return the first item on the pushStack
     return this.pushStack[0];
   }
 };
@@ -43,6 +50,7 @@ MyQueue.prototype.peek = function() {
  * @return {boolean}
  */
 MyQueue.prototype.empty = function() {
+  // Check that the length of both stacks is zero
   return (
     this.pushStack.length === 0
     && this.popStack.length === 0
