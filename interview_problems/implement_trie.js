@@ -50,7 +50,7 @@ Trie.prototype.traverse = function(word) {
     // Traverse to the next character
     node = node[char];
     // If the next character is not in our trie, return null
-    if (!node[char]) return null;
+    if (!node) return null;
   }
 
   // Return the node at the end of the string
